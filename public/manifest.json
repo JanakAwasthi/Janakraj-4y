@@ -1,0 +1,45 @@
+{
+  "name": "LinkToQR.me - All-in-One Web Toolkit",
+  "short_name": "LinkToQR.me",
+  "description": "Privacy-first web toolkit for image processing, document handling, QR codes, and more. Professional-grade tools for all your digital needs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "apple-touch-icon"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "favicon"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "favicon"
+    }
+  ],
+  "categories": ["utilities", "productivity", "tools"],
+  "lang": "en",
+  "dir": "ltr"
+}

@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://linktoqr.me/sitemap.xml
+
+# Disallow admin or private areas if any
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow all tools and public pages
+Allow: /tools/
+Allow: /how-to-use
+Allow: /privacy
+Allow: /terms
