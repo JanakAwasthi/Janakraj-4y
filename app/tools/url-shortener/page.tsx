@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, Copy, ExternalLink } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { AdBanner } from "@/components/ad-banner"
 
 export default function URLShortenerPage() {
   const [originalUrl, setOriginalUrl] = useState("")
@@ -48,7 +49,11 @@ export default function URLShortenerPage() {
 
   return (
     <div className="min-h-screen py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-8">
+          <AdBanner type="banner" />
+        </div>
+
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">
             <span className="gradient-text">URL Shortener</span>
@@ -56,73 +61,92 @@ export default function URLShortenerPage() {
           <p className="text-xl text-muted-foreground">Create short, memorable links with analytics</p>
         </div>
 
-        <Card className="tool-card">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Link className="h-6 w-6 mr-2" />
-              Shorten URL
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <Label htmlFor="original-url">Original URL</Label>
-              <Input
-                id="original-url"
-                placeholder="https://example.com/very-long-url"
-                value={originalUrl}
-                onChange={(e) => setOriginalUrl(e.target.value)}
-                className="mt-2"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="custom-alias">Custom Alias (Optional)</Label>
-              <Input
-                id="custom-alias"
-                placeholder="my-custom-link"
-                value={customAlias}
-                onChange={(e) => setCustomAlias(e.target.value)}
-                className="mt-2"
-              />
-            </div>
-
-            <Button onClick={shortenUrl} disabled={isLoading} className="w-full">
-              {isLoading ? "Shortening..." : "Shorten URL"}
-            </Button>
-
-            {shortUrl && (
-              <div className="space-y-4">
-                <div className="p-4 bg-muted rounded-lg">
-                  <Label className="text-sm font-medium">Short URL</Label>
-                  <div className="flex items-center space-x-2 mt-2">
-                    <Input value={shortUrl} readOnly />
-                    <Button onClick={copyUrl} size="sm">
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3">
+            <Card className="tool-card">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Link className="h-6 w-6 mr-2" />
+                  Shorten URL
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="original-url">Original URL</Label>
+                  <Input
+                    id="original-url"
+                    placeholder="https://example.com/very-long-url"
+                    value={originalUrl}
+                    onChange={(e) => setOriginalUrl(e.target.value)}
+                    className="mt-2"
+                  />
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center p-3 bg-muted rounded-lg">
-                    <div className="text-2xl font-bold">0</div>
-                    <div className="text-sm text-muted-foreground">Clicks</div>
-                  </div>
-                  <div className="text-center p-3 bg-muted rounded-lg">
-                    <div className="text-2xl font-bold">0</div>
-                    <div className="text-sm text-muted-foreground">Today</div>
-                  </div>
-                  <div className="text-center p-3 bg-muted rounded-lg">
-                    <div className="text-2xl font-bold">New</div>
-                    <div className="text-sm text-muted-foreground">Status</div>
-                  </div>
+                <div>
+                  <Label htmlFor="custom-alias">Custom Alias (Optional)</Label>
+                  <Input
+                    id="custom-alias"
+                    placeholder="my-custom-link"
+                    value={customAlias}
+                    onChange={(e) => setCustomAlias(e.target.value)}
+                    className="mt-2"
+                  />
                 </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+
+                <Button onClick={shortenUrl} disabled={isLoading} className="w-full">
+                  {isLoading ? "Shortening..." : "Shorten URL"}
+                </Button>
+
+                {shortUrl && (
+                  <div className="space-y-4">
+                    <div className="p-4 bg-muted rounded-lg">
+                      <Label className="text-sm font-medium">Short URL</Label>
+                      <div className="flex items-center space-x-2 mt-2">
+                        <Input value={shortUrl} readOnly />
+                        <Button onClick={copyUrl} size="sm">
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                        <Button size="sm" variant="outline">
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="text-center p-3 bg-muted rounded-lg">
+                        <div className="text-2xl font-bold">0</div>
+                        <div className="text-sm text-muted-foreground">Clicks</div>
+                      </div>
+                      <div className="text-center p-3 bg-muted rounded-lg">
+                        <div className="text-2xl font-bold">0</div>
+                        <div className="text-sm text-muted-foreground">Today</div>
+                      </div>
+                      <div className="text-center p-3 bg-muted rounded-lg">
+                        <div className="text-2xl font-bold">New</div>
+                        <div className="text-sm text-muted-foreground">Status</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <div className="mt-8">
+              <AdBanner type="inline" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <AdBanner type="sidebar" />
+              <AdBanner type="sidebar" />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12">
+          <AdBanner type="footer" />
+        </div>
       </div>
     </div>
   )

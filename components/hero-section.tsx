@@ -21,23 +21,23 @@ export function HeroSection() {
             <span className="text-white text-sm font-medium">Advanced Web Toolkit</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
+          <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               LinkToQR.me
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Your ultimate destination for image processing, document handling, QR code generation, and smart text tools.
-            All powered by cutting-edge technology.
+          <p className="hero-subtitle text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed mobile-text-balance">
+            Your ultimate destination for image processing, document handling, QR code generation, and PDF editing
+            tools. All powered by cutting-edge technology.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 mobile-button-group sm:mobile-button-group-reset">
           <Link href="#tools">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
             >
               Explore Tools
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -48,40 +48,42 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm bg-transparent"
+              className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm bg-transparent"
             >
               How to Use
             </Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mobile-gap-4">
+          <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 mobile-card-padding">
             <div className="inline-flex p-3 rounded-full bg-blue-500/20 mb-4">
               <Shield className="h-8 w-8 text-blue-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Secure & Private</h3>
-            <p className="text-gray-400">
+            <h3 className="text-xl font-semibold text-white mb-2 mobile-leading-tight">Secure & Private</h3>
+            <p className="text-gray-400 mobile-text-sm mobile-leading-relaxed">
               All processing happens locally in your browser. Your data never leaves your device.
             </p>
           </div>
 
-          <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+          <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 mobile-card-padding">
             <div className="inline-flex p-3 rounded-full bg-purple-500/20 mb-4">
               <Cpu className="h-8 w-8 text-purple-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">AI-Powered</h3>
-            <p className="text-gray-400">
+            <h3 className="text-xl font-semibold text-white mb-2 mobile-leading-tight">AI-Powered</h3>
+            <p className="text-gray-400 mobile-text-sm mobile-leading-relaxed">
               Advanced algorithms and AI technology for superior results and smart automation.
             </p>
           </div>
 
-          <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+          <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 mobile-card-padding">
             <div className="inline-flex p-3 rounded-full bg-pink-500/20 mb-4">
               <Zap className="h-8 w-8 text-pink-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Lightning Fast</h3>
-            <p className="text-gray-400">Optimized performance with instant results. No waiting, no delays.</p>
+            <h3 className="text-xl font-semibold text-white mb-2 mobile-leading-tight">Lightning Fast</h3>
+            <p className="text-gray-400 mobile-text-sm mobile-leading-relaxed">
+              Optimized performance with instant results. No waiting, no delays.
+            </p>
           </div>
         </div>
       </div>

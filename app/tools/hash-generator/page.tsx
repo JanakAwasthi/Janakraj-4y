@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Shield, Copy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { AdBanner } from "@/components/ad-banner"
 
 export default function HashGeneratorPage() {
   const [input, setInput] = useState("")
@@ -77,7 +78,11 @@ export default function HashGeneratorPage() {
 
   return (
     <div className="min-h-screen py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-8">
+          <AdBanner type="banner" />
+        </div>
+
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">
             <span className="gradient-text">Hash Generator</span>
@@ -85,58 +90,77 @@ export default function HashGeneratorPage() {
           <p className="text-xl text-muted-foreground">Generate MD5, SHA1, SHA256, and SHA512 hashes</p>
         </div>
 
-        <Card className="tool-card">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Shield className="h-6 w-6 mr-2" />
-              Hash Generator
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <Label htmlFor="input-text">Input Text</Label>
-              <Textarea
-                id="input-text"
-                placeholder="Enter text to hash..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="mt-2 h-32"
-              />
-            </div>
-
-            <div>
-              <Label>Hash Algorithm</Label>
-              <Select value={hashType} onValueChange={setHashType}>
-                <SelectTrigger className="mt-2">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="md5">MD5</SelectItem>
-                  <SelectItem value="sha1">SHA-1</SelectItem>
-                  <SelectItem value="sha256">SHA-256</SelectItem>
-                  <SelectItem value="sha512">SHA-512</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button onClick={generateHash} className="w-full">
-              Generate {hashType.toUpperCase()} Hash
-            </Button>
-
-            {output && (
-              <div>
-                <div className="flex items-center justify-between">
-                  <Label>Generated Hash</Label>
-                  <Button onClick={copyHash} size="sm" variant="outline">
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy
-                  </Button>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3">
+            <Card className="tool-card">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Shield className="h-6 w-6 mr-2" />
+                  Hash Generator
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="input-text">Input Text</Label>
+                  <Textarea
+                    id="input-text"
+                    placeholder="Enter text to hash..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    className="mt-2 h-32"
+                  />
                 </div>
-                <Textarea value={output} readOnly className="mt-2 font-mono text-sm" />
-              </div>
-            )}
-          </CardContent>
-        </Card>
+
+                <div>
+                  <Label>Hash Algorithm</Label>
+                  <Select value={hashType} onValueChange={setHashType}>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="md5">MD5</SelectItem>
+                      <SelectItem value="sha1">SHA-1</SelectItem>
+                      <SelectItem value="sha256">SHA-256</SelectItem>
+                      <SelectItem value="sha512">SHA-512</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Button onClick={generateHash} className="w-full">
+                  Generate {hashType.toUpperCase()} Hash
+                </Button>
+
+                {output && (
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <Label>Generated Hash</Label>
+                      <Button onClick={copyHash} size="sm" variant="outline">
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copy
+                      </Button>
+                    </div>
+                    <Textarea value={output} readOnly className="mt-2 font-mono text-sm" />
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <div className="mt-8">
+              <AdBanner type="inline" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <AdBanner type="sidebar" />
+              <AdBanner type="sidebar" />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12">
+          <AdBanner type="footer" />
+        </div>
       </div>
     </div>
   )

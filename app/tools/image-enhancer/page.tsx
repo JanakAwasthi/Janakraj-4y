@@ -8,6 +8,7 @@ import { FileDropzone } from "@/components/file-dropzone"
 import { Progress } from "@/components/ui/progress"
 import { Wand2, Download, RotateCcw } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { AdBanner } from "@/components/ad-banner"
 
 interface EnhancedImage {
   original: File
@@ -131,7 +132,11 @@ export default function ImageEnhancerPage() {
 
   return (
     <div className="min-h-screen py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-8">
+          <AdBanner type="banner" />
+        </div>
+
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
             <Wand2 className="h-12 w-12 text-purple-500 mr-4" />
@@ -140,8 +145,8 @@ export default function ImageEnhancerPage() {
           <p className="text-lg text-muted-foreground">Enhance image quality with AI-powered adjustments</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Upload Images</CardTitle>
@@ -212,67 +217,80 @@ export default function ImageEnhancerPage() {
                 </CardContent>
               </Card>
             )}
+
+            <div className="mt-8">
+              <AdBanner type="inline" />
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle>Enhancement Settings</CardTitle>
-                  <Button size="sm" variant="outline" onClick={resetSettings}>
-                    <RotateCcw className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Brightness: {brightness[0]}</label>
-                  <Slider value={brightness} onValueChange={setBrightness} max={100} min={-100} step={5} />
-                </div>
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>Enhancement Settings</CardTitle>
+                    <Button size="sm" variant="outline" onClick={resetSettings}>
+                      <RotateCcw className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Brightness: {brightness[0]}</label>
+                    <Slider value={brightness} onValueChange={setBrightness} max={100} min={-100} step={5} />
+                  </div>
 
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Contrast: {contrast[0]}</label>
-                  <Slider value={contrast} onValueChange={setContrast} max={100} min={-100} step={5} />
-                </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Contrast: {contrast[0]}</label>
+                    <Slider value={contrast} onValueChange={setContrast} max={100} min={-100} step={5} />
+                  </div>
 
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Saturation: {saturation[0]}</label>
-                  <Slider value={saturation} onValueChange={setSaturation} max={100} min={-100} step={5} />
-                </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Saturation: {saturation[0]}</label>
+                    <Slider value={saturation} onValueChange={setSaturation} max={100} min={-100} step={5} />
+                  </div>
 
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Sharpness: {sharpness[0]}</label>
-                  <Slider value={sharpness} onValueChange={setSharpness} max={100} min={0} step={5} />
-                </div>
-              </CardContent>
-            </Card>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Sharpness: {sharpness[0]}</label>
+                    <Slider value={sharpness} onValueChange={setSharpness} max={100} min={0} step={5} />
+                  </div>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>AI Features</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
-                    Real-time preview
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
-                    Batch processing
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                    Quality preservation
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
-                    Advanced filters
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>AI Features</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
+                      Real-time preview
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
+                      Batch processing
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                      Quality preservation
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
+                      Advanced filters
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <AdBanner type="sidebar" />
+              <AdBanner type="sidebar" />
+            </div>
           </div>
+        </div>
+
+        <div className="mt-12">
+          <AdBanner type="footer" />
         </div>
       </div>
     </div>

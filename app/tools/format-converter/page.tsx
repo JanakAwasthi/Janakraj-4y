@@ -8,6 +8,7 @@ import { FileDropzone } from "@/components/file-dropzone"
 import { Progress } from "@/components/ui/progress"
 import { RefreshCw, Download } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { AdBanner } from "@/components/ad-banner"
 
 type ImageFormat = "jpeg" | "png" | "webp"
 
@@ -115,7 +116,11 @@ export default function FormatConverterPage() {
 
   return (
     <div className="min-h-screen py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-8">
+          <AdBanner type="banner" />
+        </div>
+
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
             <RefreshCw className="h-12 w-12 text-cyan-500 mr-4" />
@@ -124,8 +129,8 @@ export default function FormatConverterPage() {
           <p className="text-lg text-muted-foreground">Convert between JPG, PNG, and WebP formats</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Upload Images</CardTitle>
@@ -187,49 +192,62 @@ export default function FormatConverterPage() {
                 </CardContent>
               </Card>
             )}
+
+            <div className="mt-8">
+              <AdBanner type="inline" />
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Conversion Settings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Target Format</label>
-                  <Select value={targetFormat} onValueChange={(value: ImageFormat) => setTargetFormat(value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="jpeg">JPEG (.jpg)</SelectItem>
-                      <SelectItem value="png">PNG (.png)</SelectItem>
-                      <SelectItem value="webp">WebP (.webp)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conversion Settings</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Target Format</label>
+                    <Select value={targetFormat} onValueChange={(value: ImageFormat) => setTargetFormat(value)}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="jpeg">JPEG (.jpg)</SelectItem>
+                        <SelectItem value="png">PNG (.png)</SelectItem>
+                        <SelectItem value="webp">WebP (.webp)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Format Info</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <strong>JPEG:</strong> Best for photos, smaller file size, no transparency
+              <Card>
+                <CardHeader>
+                  <CardTitle>Format Info</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <strong>JPEG:</strong> Best for photos, smaller file size, no transparency
+                    </div>
+                    <div>
+                      <strong>PNG:</strong> Best for graphics, supports transparency, larger file size
+                    </div>
+                    <div>
+                      <strong>WebP:</strong> Modern format, excellent compression, supports transparency
+                    </div>
                   </div>
-                  <div>
-                    <strong>PNG:</strong> Best for graphics, supports transparency, larger file size
-                  </div>
-                  <div>
-                    <strong>WebP:</strong> Modern format, excellent compression, supports transparency
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              <AdBanner type="sidebar" />
+              <AdBanner type="sidebar" />
+            </div>
           </div>
+        </div>
+
+        <div className="mt-12">
+          <AdBanner type="footer" />
         </div>
       </div>
     </div>

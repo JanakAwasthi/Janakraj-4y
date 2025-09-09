@@ -14,6 +14,15 @@ export function Footer() {
       ],
     },
     {
+      title: "PDF Tools",
+      links: [
+        { name: "Word to PDF", href: "/tools/word-to-pdf" },
+        { name: "Excel to PDF", href: "/tools/excel-to-pdf" },
+        { name: "PDF to Word", href: "/tools/pdf-to-word" },
+        { name: "PDF Editor", href: "/tools/pdf-editor" },
+      ],
+    },
+    {
       title: "Document Tools",
       links: [
         { name: "PDF Merger", href: "/tools/pdf-merger" },
@@ -29,15 +38,6 @@ export function Footer() {
         { name: "QR Scanner", href: "/tools/qr-scanner" },
         { name: "Custom Designer", href: "/tools/qr-designer" },
         { name: "Bulk QR Codes", href: "/tools/bulk-qr" },
-      ],
-    },
-    {
-      title: "Smart Tools",
-      links: [
-        { name: "Secure Notes", href: "/tools/secure-text" },
-        { name: "AI Summarizer", href: "/tools/ai-summarizer" },
-        { name: "Text Analyzer", href: "/tools/text-analyzer" },
-        { name: "Smart Storage", href: "/tools/smart-storage" },
       ],
     },
   ]
@@ -65,7 +65,7 @@ export function Footer() {
               future of digital tools.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
+              <Link href="https://github.com/JanakAwasthi" className="text-muted-foreground hover:text-foreground">
                 <Github className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-foreground">

@@ -5,8 +5,7 @@ import {
   ImageIcon,
   FileText,
   QrCode,
-  Type,
-  FileArchiveIcon as Compress,
+  Compass as Compress,
   Sparkles,
   Crop,
   RefreshCw,
@@ -27,18 +26,26 @@ import {
   Shield,
   History,
   Zap,
-  Bot,
+  Edit,
+  Scissors,
+  FileSignature,
 } from "lucide-react"
 import Link from "next/link"
 
 const toolCategories = [
   {
-    title: "Smart Text Tools",
-    icon: Type,
-    color: "from-green-500 to-emerald-600",
+    title: "PDF Tools",
+    icon: FileText,
+    color: "from-red-500 to-orange-600",
     tools: [
-      { name: "Store Your Note", icon: Lock, href: "/tools/store-text" },
-      { name: "Find Your Note", icon: Search, href: "/tools/find-text" },
+      { name: "PDF Editor", icon: Edit, href: "/tools/pdf-editor" },
+      { name: "PDF Splitter", icon: Scissors, href: "/tools/pdf-splitter" },
+      { name: "PDF Compressor", icon: Compress, href: "/tools/pdf-compressor" },
+      { name: "PDF Protector", icon: Lock, href: "/tools/pdf-protector" },
+      { name: "PDF to Word", icon: FileText, href: "/tools/pdf-to-word" },
+      { name: "Word to PDF", icon: FileSignature, href: "/tools/word-to-pdf" },
+      { name: "Excel to PDF", icon: FileText, href: "/tools/excel-to-pdf" },
+      { name: "PDF to Excel", icon: Scissors, href: "/tools/pdf-to-excel" },
     ],
   },
   {
@@ -65,7 +72,6 @@ const toolCategories = [
       { name: "Digital Signature", icon: PenTool, href: "/tools/digital-signature" },
       { name: "Watermark Tools", icon: Droplets, href: "/tools/watermark-tools" },
       { name: "Text Extractor (OCR)", icon: Search, href: "/tools/text-extractor" },
-      { name: "AI Content Detector", icon: Bot, href: "/tools/ai-detector" },
     ],
   },
   {
@@ -96,39 +102,43 @@ const toolCategories = [
 
 export function AllToolsSection() {
   return (
-    <section id="tools" className="py-20 px-4">
+    <section id="tools" className="py-20 px-4 mobile-section-padding">
       <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-6xl font-bold mb-4">
+        <div className="text-center mb-16 mobile-mb-8">
+          <h2 className="text-4xl lg:text-6xl font-bold mb-4 mobile-leading-tight">
             <span className="gradient-text">ALL TOOLS</span>
           </h2>
-          <p className="text-xl text-muted-foreground">Choose from our comprehensive collection of web tools</p>
+          <p className="text-xl text-muted-foreground mobile-text-sm mobile-text-balance">
+            Choose from our comprehensive collection of web tools
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-8 desktop-grid-5 mobile-gap-4">
           {toolCategories.map((category) => {
             const CategoryIcon = category.icon
             return (
               <Card key={category.title} className="tool-card group">
-                <CardContent className="p-6">
-                  <div className="text-center mb-6">
+                <CardContent className="p-6 mobile-card-padding">
+                  <div className="text-center mb-6 mobile-mb-4">
                     <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${category.color} mb-4`}>
                       <CategoryIcon className="h-8 w-8 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2">{category.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 mobile-leading-tight">{category.title}</h3>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="space-y-3 mobile-content-spacing">
                     {category.tools.map((tool) => {
                       const ToolIcon = tool.icon
                       return (
                         <Link
                           key={tool.name}
                           href={tool.href}
-                          className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group/tool"
+                          className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors group/tool mobile-rounded-lg"
                         >
-                          <ToolIcon className="h-4 w-4 text-muted-foreground group-hover/tool:text-foreground" />
-                          <span className="text-sm font-medium group-hover/tool:text-foreground">{tool.name}</span>
+                          <ToolIcon className="h-4 w-4 text-muted-foreground group-hover/tool:text-foreground flex-shrink-0" />
+                          <span className="text-sm font-medium group-hover/tool:text-foreground mobile-text-xs">
+                            {tool.name}
+                          </span>
                         </Link>
                       )
                     })}

@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider"
 import { QrCode, Download, Copy, Palette } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import QRCodeLib from "qrcode"
+import { AdBanner } from "@/components/ad-banner"
 
 type QRType = "text" | "url" | "wifi" | "email" | "phone" | "sms"
 
@@ -297,6 +298,10 @@ export default function QRGeneratorPage() {
   return (
     <div className="min-h-screen py-20 px-4">
       <div className="container mx-auto max-w-6xl">
+        <div className="mb-8">
+          <AdBanner type="banner" />
+        </div>
+
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
             <QrCode className="h-12 w-12 text-lime-500 mr-4" />
@@ -305,8 +310,8 @@ export default function QRGeneratorPage() {
           <p className="text-lg text-muted-foreground">Create custom QR codes for text, URLs, WiFi, and more</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>QR Code Type</CardTitle>
@@ -371,69 +376,82 @@ export default function QRGeneratorPage() {
                 </div>
               </CardContent>
             </Card>
+
+            <div className="mt-8">
+              <AdBanner type="inline" />
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Generated QR Code</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center">
-                  {qrCode ? (
-                    <div className="space-y-4">
-                      <img
-                        src={qrCode || "/placeholder.svg"}
-                        alt="Generated QR Code"
-                        className="mx-auto border rounded-lg"
-                      />
-                      <div className="flex gap-2 justify-center">
-                        <Button onClick={downloadQR} className="flex items-center">
-                          <Download className="h-4 w-4 mr-2" />
-                          Download
-                        </Button>
-                        <Button variant="outline" onClick={copyQR} className="flex items-center bg-transparent">
-                          <Copy className="h-4 w-4 mr-2" />
-                          Copy
-                        </Button>
+          <div className="lg:col-span-1">
+            <div className="sticky top-24 space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Generated QR Code</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center">
+                    {qrCode ? (
+                      <div className="space-y-4">
+                        <img
+                          src={qrCode || "/placeholder.svg"}
+                          alt="Generated QR Code"
+                          className="mx-auto border rounded-lg"
+                        />
+                        <div className="flex gap-2 justify-center">
+                          <Button onClick={downloadQR} className="flex items-center">
+                            <Download className="h-4 w-4 mr-2" />
+                            Download
+                          </Button>
+                          <Button variant="outline" onClick={copyQR} className="flex items-center bg-transparent">
+                            <Copy className="h-4 w-4 mr-2" />
+                            Copy
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="py-12 text-muted-foreground">
-                      <QrCode className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                      <p>Fill in the content to generate QR code</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                    ) : (
+                      <div className="py-12 text-muted-foreground">
+                        <QrCode className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                        <p>Fill in the content to generate QR code</p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Features</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                    Multiple QR types
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
-                    Custom colors
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
-                    Adjustable size
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
-                    Instant generation
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Features</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                      Multiple QR types
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
+                      Custom colors
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
+                      Adjustable size
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
+                      Instant generation
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <AdBanner type="sidebar" />
+              <AdBanner type="sidebar" />
+            </div>
           </div>
+        </div>
+
+        <div className="mt-12">
+          <AdBanner type="footer" />
         </div>
       </div>
     </div>

@@ -1,17 +1,7 @@
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {
-  FileArchiveIcon as Compress,
-  QrCode,
-  FileImage,
-  Scan,
-  Shield,
-  Layers,
-  PenTool,
-  FileText,
-  ArrowRight,
-} from "lucide-react"
+import { Compass as Compress, QrCode, FileImage, Scan, Layers, PenTool, FileText, ArrowRight } from "lucide-react"
 
 const featuredTools = [
   {
@@ -29,10 +19,10 @@ const featuredTools = [
     gradient: "from-purple-500 to-pink-500",
   },
   {
-    title: "Photo to PDF",
-    description: "Convert images to PDF documents instantly",
-    icon: FileImage,
-    href: "/tools/photo-to-pdf",
+    title: "Word to PDF",
+    description: "Convert Word documents to PDF format instantly",
+    icon: FileText,
+    href: "/tools/word-to-pdf",
     gradient: "from-green-500 to-emerald-500",
   },
   {
@@ -43,10 +33,10 @@ const featuredTools = [
     gradient: "from-orange-500 to-red-500",
   },
   {
-    title: "Secure Text",
-    description: "Store encrypted notes with password protection",
-    icon: Shield,
-    href: "/tools/secure-text",
+    title: "PDF Editor",
+    description: "Edit and modify PDF documents online",
+    icon: PenTool,
+    href: "/tools/pdf-editor",
     gradient: "from-indigo-500 to-purple-500",
   },
   {
@@ -64,10 +54,10 @@ const featuredTools = [
     gradient: "from-teal-500 to-cyan-500",
   },
   {
-    title: "Store Your Note",
-    description: "Save and organize your notes securely",
-    icon: FileText,
-    href: "/tools/store-text",
+    title: "Excel to PDF",
+    description: "Convert Excel spreadsheets to PDF format",
+    icon: FileImage,
+    href: "/tools/excel-to-pdf",
     gradient: "from-violet-500 to-purple-500",
   },
 ]

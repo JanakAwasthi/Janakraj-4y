@@ -1,30 +1,80 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Palette, Copy, RefreshCw } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Palette, Copy, RefreshCw, Download, Shuffle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+
+type PaletteType = "complementary" | "analogous" | "triadic" | "monochromatic" | "split-complementary"
 
 export default function ColorPalettePage() {
   const [baseColor, setBaseColor] = useState("#3B82F6")
   const [palette, setPalette] = useState<string[]>([])
+  const [paletteType, setPaletteType] = useState<PaletteType>("complementary")
+  const [colorCount, setColorCount] = useState(5)
   const { toast } = useToast()
+
+  useEffect(() => {
+    generatePalette()
+  }, [baseColor, paletteType, colorCount])
 
   const generatePalette = () => {
     const colors = []
     const baseHsl = hexToHsl(baseColor)
 
-    // Generate complementary colors
-    for (let i = 0; i < 5; i++) {
-      const hue = (baseHsl.h + i * 72) % 360
-      const color = hslToHex(hue, baseHsl.s, baseHsl.l)
-      colors.push(color)
+    switch (paletteType) {
+      case "complementary":
+        colors.push(baseColor)
+        colors.push(hslToHex((baseHsl.h + 180) % 360, baseHsl.s, baseHsl.l))
+        // Add variations
+        for (let i = 2; i < colorCount; i++) {
+          const lightness = Math.max(10, Math.min(90, baseHsl.l + (i - 2) * 20 - 20))
+          colors.push(hslToHex(baseHsl.h, baseHsl.s, lightness))
+        }
+        break
+
+      case "analogous":
+        for (let i = 0; i < colorCount; i++) {
+          const hue = (baseHsl.h + i * 30) % 360
+          colors.push(hslToHex(hue, baseHsl.s, baseHsl.l))
+        }
+        break
+
+      case "triadic":
+        colors.push(baseColor)
+        colors.push(hslToHex((baseHsl.h + 120) % 360, baseHsl.s, baseHsl.l))
+        colors.push(hslToHex((baseHsl.h + 240) % 360, baseHsl.s, baseHsl.l))
+        // Add variations
+        for (let i = 3; i < colorCount; i++) {
+          const hue = (baseHsl.h + (i - 3) * 60) % 360
+          colors.push(hslToHex(hue, baseHsl.s * 0.8, baseHsl.l))
+        }
+        break
+
+      case "monochromatic":
+        for (let i = 0; i < colorCount; i++) {
+          const lightness = Math.max(10, Math.min(90, 20 + i * (70 / (colorCount - 1))))
+          colors.push(hslToHex(baseHsl.h, baseHsl.s, lightness))
+        }
+        break
+
+      case "split-complementary":
+        colors.push(baseColor)
+        colors.push(hslToHex((baseHsl.h + 150) % 360, baseHsl.s, baseHsl.l))
+        colors.push(hslToHex((baseHsl.h + 210) % 360, baseHsl.s, baseHsl.l))
+        // Add variations
+        for (let i = 3; i < colorCount; i++) {
+          const saturation = Math.max(20, baseHsl.s - (i - 3) * 15)
+          colors.push(hslToHex(baseHsl.h, saturation, baseHsl.l))
+        }
+        break
     }
 
-    setPalette(colors)
+    setPalette(colors.slice(0, colorCount))
   }
 
   const hexToHsl = (hex: string) => {
@@ -94,70 +144,234 @@ export default function ColorPalettePage() {
     })
   }
 
+  const copyAllColors = async () => {
+    const colorString = palette.join(", ")
+    await navigator.clipboard.writeText(colorString)
+    toast({
+      title: "Palette Copied",
+      description: "All colors copied to clipboard",
+    })
+  }
+
+  const randomizeBaseColor = () => {
+    const randomColor = `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`
+    setBaseColor(randomColor)
+  }
+
+  const downloadPalette = () => {
+    const css = palette.map((color, index) => `--color-${index + 1}: ${color};`).join("\n")
+    const blob = new Blob([css], { type: "text/css" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `color-palette-${Date.now()}.css`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
-    <div className="min-h-screen py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">
+    <div className="min-h-screen py-20 px-4 mobile-section-padding">
+      <div className="container mx-auto max-w-6xl mobile-padding">
+        <div className="text-center mb-12 mobile-mb-8">
+          <h1 className="text-4xl font-bold mb-4 mobile-leading-tight">
             <span className="gradient-text">Color Palette Generator</span>
           </h1>
-          <p className="text-xl text-muted-foreground">Generate beautiful color palettes for your designs</p>
+          <p className="text-xl text-muted-foreground mobile-text-sm mobile-text-balance">
+            Generate beautiful color palettes with real-time preview and harmony analysis
+          </p>
         </div>
 
-        <Card className="tool-card">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Palette className="h-6 w-6 mr-2" />
-              Color Generator
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center space-x-4">
-              <div>
-                <label className="text-sm font-medium">Base Color</label>
-                <div className="flex items-center space-x-2 mt-2">
-                  <input
-                    type="color"
-                    value={baseColor}
-                    onChange={(e) => setBaseColor(e.target.value)}
-                    className="w-12 h-12 rounded border"
-                  />
-                  <Input value={baseColor} onChange={(e) => setBaseColor(e.target.value)} className="w-32" />
-                </div>
-              </div>
-              <Button onClick={generatePalette} className="mt-6">
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Generate Palette
-              </Button>
-            </div>
-
-            {palette.length > 0 && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Generated Palette</h3>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                  {palette.map((color, index) => (
-                    <div key={index} className="space-y-2">
-                      <div
-                        className="w-full h-24 rounded-lg border cursor-pointer hover:scale-105 transition-transform"
-                        style={{ backgroundColor: color }}
-                        onClick={() => copyColor(color)}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mobile-gap-4">
+          <div className="lg:col-span-2">
+            <Card className="tool-card">
+              <CardHeader>
+                <CardTitle className="flex items-center mobile-text-center">
+                  <Palette className="h-6 w-6 mr-2" />
+                  Color Generator
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6 mobile-content-spacing mobile-card-padding">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mobile-gap-2">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block mobile-text-xs">Base Color</label>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="color"
+                        value={baseColor}
+                        onChange={(e) => setBaseColor(e.target.value)}
+                        className="w-16 h-12 rounded border mobile-touch-target"
                       />
-                      <div className="text-center">
-                        <Badge variant="outline" className="text-xs">
-                          {color}
-                        </Badge>
-                        <Button size="sm" variant="ghost" onClick={() => copyColor(color)} className="w-full mt-1">
-                          <Copy className="h-3 w-3 mr-1" />
-                          Copy
-                        </Button>
-                      </div>
+                      <Input
+                        value={baseColor}
+                        onChange={(e) => setBaseColor(e.target.value)}
+                        className="flex-1 mobile-input-group"
+                      />
+                      <Button
+                        onClick={randomizeBaseColor}
+                        size="sm"
+                        variant="outline"
+                        className="mobile-touch-target bg-transparent"
+                      >
+                        <Shuffle className="h-4 w-4" />
+                      </Button>
                     </div>
-                  ))}
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium mb-2 block mobile-text-xs">Palette Type</label>
+                    <Select value={paletteType} onValueChange={(value: PaletteType) => setPaletteType(value)}>
+                      <SelectTrigger className="mobile-touch-target">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="complementary">Complementary</SelectItem>
+                        <SelectItem value="analogous">Analogous</SelectItem>
+                        <SelectItem value="triadic">Triadic</SelectItem>
+                        <SelectItem value="monochromatic">Monochromatic</SelectItem>
+                        <SelectItem value="split-complementary">Split Complementary</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+
+                <div>
+                  <label className="text-sm font-medium mb-2 block mobile-text-xs">
+                    Number of Colors: {colorCount}
+                  </label>
+                  <input
+                    type="range"
+                    min="3"
+                    max="8"
+                    value={colorCount}
+                    onChange={(e) => setColorCount(Number(e.target.value))}
+                    className="w-full mobile-touch-target"
+                  />
+                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                    <span>3</span>
+                    <span>8</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mobile-button-group">
+                  <Button onClick={generatePalette} className="mobile-flex-1 sm:mobile-flex-initial">
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Regenerate
+                  </Button>
+                  <Button
+                    onClick={copyAllColors}
+                    variant="outline"
+                    className="mobile-flex-1 sm:mobile-flex-initial bg-transparent"
+                  >
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy All
+                  </Button>
+                  <Button
+                    onClick={downloadPalette}
+                    variant="outline"
+                    className="mobile-flex-1 sm:mobile-flex-initial bg-transparent"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download CSS
+                  </Button>
+                </div>
+
+                {palette.length > 0 && (
+                  <div className="space-y-4 mobile-content-spacing">
+                    <h3 className="text-lg font-semibold mobile-text-center">Generated Palette</h3>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mobile-gap-2">
+                      {palette.map((color, index) => (
+                        <div key={index} className="space-y-2">
+                          <div
+                            className="w-full h-24 sm:h-32 rounded-lg border cursor-pointer hover:scale-105 transition-transform mobile-touch-target"
+                            style={{ backgroundColor: color }}
+                            onClick={() => copyColor(color)}
+                          />
+                          <div className="text-center">
+                            <Badge variant="outline" className="text-xs mobile-text-xs mb-1">
+                              {color}
+                            </Badge>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => copyColor(color)}
+                              className="w-full mobile-touch-target"
+                            >
+                              <Copy className="h-3 w-3 mr-1" />
+                              Copy
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-6 mobile-content-spacing">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg mobile-text-center">Palette Types</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm mobile-text-xs mobile-card-padding">
+                <div>
+                  <strong>Complementary:</strong> Colors opposite on the color wheel
+                </div>
+                <div>
+                  <strong>Analogous:</strong> Colors next to each other on the wheel
+                </div>
+                <div>
+                  <strong>Triadic:</strong> Three colors evenly spaced on the wheel
+                </div>
+                <div>
+                  <strong>Monochromatic:</strong> Different shades of the same color
+                </div>
+                <div>
+                  <strong>Split Complementary:</strong> Base color plus two adjacent to its complement
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg mobile-text-center">Features</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm mobile-text-xs mobile-card-padding">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
+                  <span>Real-time generation</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                  <span>Multiple harmony types</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                  <span>Adjustable color count</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full" />
+                  <span>CSS export</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg mobile-text-center">Tips</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm mobile-text-xs mobile-card-padding">
+                <p>• Click any color to copy its hex code</p>
+                <p>• Use complementary colors for high contrast</p>
+                <p>• Analogous colors create harmony</p>
+                <p>• Monochromatic palettes are safe and elegant</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   )

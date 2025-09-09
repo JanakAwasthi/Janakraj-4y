@@ -7,8 +7,9 @@ import { Slider } from "@/components/ui/slider"
 import { Badge } from "@/components/ui/badge"
 import { FileDropzone } from "@/components/file-dropzone"
 import { Progress } from "@/components/ui/progress"
-import { Download, FileArchiveIcon as Compress, Info } from "lucide-react"
+import { Download, Compass as Compress, Info } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { AdBanner } from "@/components/ad-banner"
 
 interface CompressedImage {
   original: File
@@ -117,7 +118,11 @@ export default function ImageCompressorPage() {
 
   return (
     <div className="min-h-screen py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-6xl">
+        <div className="mb-8">
+          <AdBanner type="banner" />
+        </div>
+
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-4">
             <Compress className="h-12 w-12 text-orange-500 mr-4" />
@@ -128,8 +133,8 @@ export default function ImageCompressorPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -199,51 +204,64 @@ export default function ImageCompressorPage() {
                 </CardContent>
               </Card>
             )}
+
+            <div className="mt-8">
+              <AdBanner type="inline" />
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Compression Settings</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Quality: {quality[0]}%</label>
-                  <Slider value={quality} onValueChange={setQuality} max={100} min={10} step={5} className="w-full" />
-                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                    <span>Smaller file</span>
-                    <span>Better quality</span>
+          <div className="lg:col-span-1 space-y-6">
+            <div className="sticky top-24 space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Compression Settings</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Quality: {quality[0]}%</label>
+                    <Slider value={quality} onValueChange={setQuality} max={100} min={10} step={5} className="w-full" />
+                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                      <span>Smaller file</span>
+                      <span>Better quality</span>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Features</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                    Batch processing
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
-                    Adjustable quality
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
-                    Real-time preview
-                  </li>
-                  <li className="flex items-center">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
-                    No server upload
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Features</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2" />
+                      Batch processing
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-2" />
+                      Adjustable quality
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-2" />
+                      Real-time preview
+                    </li>
+                    <li className="flex items-center">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
+                      No server upload
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <AdBanner type="sidebar" />
+              <AdBanner type="sidebar" />
+            </div>
           </div>
+        </div>
+
+        <div className="mt-12">
+          <AdBanner type="footer" />
         </div>
       </div>
     </div>
